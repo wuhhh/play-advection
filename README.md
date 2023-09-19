@@ -2,7 +2,7 @@
 
 _A port of the work done by Omar Shehata (https://code.tutsplus.com/how-to-write-a-smoke-shader--cms-25587t) from vanilla threejs to React Three Fiber by Huw Roberts. I wanted to understand how to implement the "frame buffer trick" in R3F._
 
-[Codesandbox]()
+See it in action: [CodeSandbox](https://githubbox.com/wuhhh/r3f-smoke)
 
 ### Resources:
 
