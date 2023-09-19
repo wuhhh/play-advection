@@ -41,10 +41,15 @@ const smokeShader = /* glsl */ `
 		float dist = distance(uSmokeSource.xy,fragCoord.xy);
 		// Generate smoke when mouse is pressed
 		gl_FragColor.rgb += uSmokeSource.z * max(uSmokeDistance-dist,0.0);
+		// Uncomment for always on painting
+		// gl_FragColor.rgb += 0.1 * max(uSmokeDistance-dist,0.0);
 
 		// Smoke diffuse
 		float xPixel = 1.0/uRes.x;//The size of a single pixel
 		float yPixel = 1.0/uRes.y;
+		// Interesting numbers...
+		// float xPixel = 1.0/uRes.x * 16.0;//The size of a single pixel
+		// float yPixel = 1.0/uRes.y * 2.0;
 		vec4 rightColor = texture2D(uTexture,vec2(pixel.x+xPixel,pixel.y));
 		vec4 leftColor = texture2D(uTexture,vec2(pixel.x-xPixel,pixel.y));
 		vec4 upColor = texture2D(uTexture,vec2(pixel.x,pixel.y+yPixel));
