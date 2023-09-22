@@ -53,6 +53,7 @@ const smokeShader = /* glsl */ `
 		vec4 rightColor = texture2D(uTexture,vec2(pixel.x+xPixel,pixel.y));
 		vec4 leftColor = texture2D(uTexture,vec2(pixel.x-xPixel,pixel.y));
 		vec4 upColor = texture2D(uTexture,vec2(pixel.x,pixel.y+yPixel));
+		// vec4 upColor = texture2D(uTexture,vec2(pixel.x,pixel.y+yPixel+0.006)); // down instead
 		vec4 downColor = texture2D(uTexture,vec2(pixel.x,pixel.y-yPixel));
 
 		// Handle the bottom boundary 
