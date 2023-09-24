@@ -13,5 +13,5 @@ export default defineConfig({
       "@src": resolve(__dirname, "./src"),
     },
   },
-  plugins: [react()],
+  plugins: [react(), import("vite-plugin-glsl").then(glsl => glsl.default())],
 });
