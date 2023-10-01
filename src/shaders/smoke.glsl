@@ -9,7 +9,7 @@ uniform vec2 uRes; // The width and height of our screen
 uniform vec3 uSmokeSource; // The x,y are the posiiton. The z is the power/density
 uniform sampler2D uTexture; // Our input texture
 uniform sampler2D uVelocityTexture; // Advection / velocity field texture
-// uniform float uTime; // The time in seconds
+uniform float uTime; // The time in seconds
 
 varying vec2 vUv;
 
@@ -22,7 +22,9 @@ void main() {
 	gl_FragColor = texture2D( uTexture, pixel );
 
 	float dist = distance(uSmokeSource.xy,fragCoord.xy);
-	gl_FragColor.rgb += uSmokeSource.z * 0.1 * max(30.0-dist,0.0);
+	
+	// gl_FragColor.r = sin(uTime * 0.) + 1.0 * 0.5;
+	gl_FragColor.b += uSmokeSource.z * 0.01 * max(100.0-dist,0.0);
 
 	float xPixel = 1.0/uRes.x; //The size of a single pixel
 	float yPixel = 1.0/uRes.y;
@@ -62,14 +64,14 @@ void main() {
 	// leftColor *= clamp(leftDot, 0.0, 1.0);
 	// upColor *= clamp(upDot, 0.0, 1.0) * 5.0;
 
-	float mult = 10.0;
+	float mult = 4.0;
 	rightColor *= (rightWeight * mult);
 	leftColor *= (leftWeight * mult);
 	upColor *= (upWeight * mult);
 	downColor *= (downWeight * mult);
 
 	vec3 factor = 
-		0.01 * 
+		0.001 * 
 			(
 				leftColor.rgb + 
 				rightColor.rgb + 
@@ -78,6 +80,7 @@ void main() {
 				4.0 * gl_FragColor.rgb
 			);
 
+	gl_FragColor.rgb += factor;
 	vec2 advectedPos = pixel - directionVec * 0.001; // some_constant controls the distance of advection
 	vec4 advectedColor = texture2D(uTexture, advectedPos);
 	gl_FragColor.rgb = mix(gl_FragColor.rgb, advectedColor.rgb, 0.5);
