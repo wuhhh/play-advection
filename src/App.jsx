@@ -38,9 +38,10 @@ const colorMaterial = shaderMaterial(
 extend({ ColorMaterial: colorMaterial });
 
 const FBOScene = ({ ...props }) => {
-  // const graphicTexture = useTexture("/drops-normal.jpg");
+  const graphicTexture = useTexture("/img2.jpg");
+  // const graphicTexture = useTexture("/water-normal.jpg");
   // const graphicTexture = useTexture("/water-detail.jpg");
-  const graphicTexture = useTexture("/water-normal.jpg");
+  // const graphicTexture = useTexture("/11013-normal.jpg");
   const bufferMaterial = useRef();
 
   // Controls
