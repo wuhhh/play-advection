@@ -24,7 +24,9 @@ void main() {
 	float dist = distance(uSmokeSource.xy,fragCoord.xy);
 	
 	// gl_FragColor.r = sin(uTime * 0.) + 1.0 * 0.5;
-	gl_FragColor.b += uSmokeSource.z * 0.01 * max(100.0-dist,0.0);
+	// gl_FragColor.g += uSmokeSource.z * 0.002 * max(100.0-dist,0.75);
+	gl_FragColor.r += uSmokeSource.z * 0.01 * max(50.0-dist,0.5);
+	gl_FragColor.b += uSmokeSource.z * 0.03 * max(75.0-dist,0.0);
 
 	float xPixel = 1.0/uRes.x; //The size of a single pixel
 	float yPixel = 1.0/uRes.y;

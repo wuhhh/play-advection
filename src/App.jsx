@@ -6,7 +6,7 @@
 import * as THREE from "three";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { shaderMaterial, useFBO, useTexture } from "@react-three/drei";
+import { Box, shaderMaterial, useFBO, useTexture } from "@react-three/drei";
 import { Leva, useControls } from "leva";
 
 import smokeShader from "./shaders/smoke.glsl";
@@ -38,8 +38,8 @@ const colorMaterial = shaderMaterial(
 extend({ ColorMaterial: colorMaterial });
 
 const FBOScene = ({ ...props }) => {
-  const graphicTexture = useTexture("/water-normal.jpg");
-  // const graphicTexture = useTexture("/water-detail.jpg");
+  const graphicTexture = useTexture("/rgbnorm1.png");
+  // const graphicTexture = useTexture("/normalMap.jpg");
   const bufferMaterial = useRef();
 
   // Controls
