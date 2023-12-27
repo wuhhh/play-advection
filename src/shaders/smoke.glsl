@@ -1,5 +1,6 @@
 precision mediump float;
 
+uniform float uAdvDist; // The distance to advect
 uniform vec3 uBaseColor; // The base background color
 uniform float uColorMode; // Subtractive or additive color mode
 uniform float uFactor; // The factor to multiply the color by
@@ -34,6 +35,10 @@ void main() {
 	gl_FragColor.r += (rIntensity * rThroughput * max(uRGBRadius.r - dist, 0.0)) * uColorMode; // If the dist < 50, add 0.01 to r, radius 50
 	gl_FragColor.g += (gIntensity * gThroughput * max(uRGBRadius.g - dist, 0.0)) * uColorMode; // If the dist < 75, add 0.03 to b, radius 75
 	gl_FragColor.b += (bIntensity * bThroughput * max(uRGBRadius.b - dist, 0.0)) * uColorMode; // If the dist < 75, add 0.03 to b, radius 75
+
+	// gl_FragColor.r += max(uRGBRadius.r - dist, 0.0) * (sin(uTime * 8.0) + 1.5) * 0.0007;
+	// gl_FragColor.g += max(uRGBRadius.g - dist, 0.0) * (sin(uTime * 2.0) + 1.25) * 0.0007;
+	// gl_FragColor.b += max(uRGBRadius.b - dist, 0.0) * (sin(uTime * 3.0) + 2.5) * 0.0007;
 
 	float xPixel = 1.0/uRes.x; //The size of a single pixel
 	float yPixel = 1.0/uRes.y;
@@ -94,7 +99,7 @@ void main() {
 		gl_FragColor.b = clamp(advected.b, 0.0, uBaseColor.b);
 	}
 	
-	vec2 advectedPos = pixel - directionVec * 0.001; // controls the distance of advection
+	vec2 advectedPos = pixel - directionVec * uAdvDist * 0.001; // controls the distance of advection
 	vec4 advectedColor = texture2D(uTexture, advectedPos);
 	vec3 advectedMix = mix(gl_FragColor.rgb, advectedColor.rgb, 0.5);
 

@@ -13,6 +13,7 @@ import smokeShader from "./shaders/smoke.glsl";
 
 const colorMaterial = shaderMaterial(
   {
+    uAdvDist: null,
     uBaseColor: null,
     uColorMode: null,
     uFactor: null,
@@ -47,6 +48,12 @@ const FBOScene = ({ ...props }) => {
   const bufferMaterial = useRef();
 
   const config = useControls("Smoke", {
+    advectionDistance: {
+      value: 1.0,
+      min: 1.0,
+      max: 10.0,
+      step: 0.1,
+    },
     baseTextureColor: {
       value: "#2e6b75",
     },
@@ -124,6 +131,7 @@ const FBOScene = ({ ...props }) => {
 
   // Set material and pass uniforms
   bufferMaterial.current = new colorMaterial({
+    uAdvDist: config.advectionDistance,
     uBaseColor: new THREE.Color(config.baseTextureColor),
     uColorMode: config.colorMode === "Additive" ? 1.0 : -1.0,
     uFactor: config.factor,
