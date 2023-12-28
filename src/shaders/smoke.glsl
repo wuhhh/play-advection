@@ -36,6 +36,11 @@ void main() {
 	gl_FragColor.g += (gIntensity * gThroughput * max(uRGBRadius.g - dist, 0.0)) * uColorMode; // If the dist < 75, add 0.03 to b, radius 75
 	gl_FragColor.b += (bIntensity * bThroughput * max(uRGBRadius.b - dist, 0.0)) * uColorMode; // If the dist < 75, add 0.03 to b, radius 75
 
+	// vec3 velTex = texture2D(uVelocityTexture, vUv).rgb;
+	// vec3 curr = gl_FragColor.rgb;
+	// vec3 targ = texture2D(uVelocityTexture, pixel).rgb * max((uRGBRadius.r - dist), 0.0);
+	// gl_FragColor.rgb -= (min(curr, targ) - max(curr, targ)) * 0.009 * uColorMode;
+
 	// gl_FragColor.r += max(uRGBRadius.r - dist, 0.0) * (sin(uTime * 8.0) + 1.5) * 0.0007;
 	// gl_FragColor.g += max(uRGBRadius.g - dist, 0.0) * (sin(uTime * 2.0) + 1.25) * 0.0007;
 	// gl_FragColor.b += max(uRGBRadius.b - dist, 0.0) * (sin(uTime * 3.0) + 2.5) * 0.0007;

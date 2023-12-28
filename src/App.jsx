@@ -39,7 +39,9 @@ const colorMaterial = shaderMaterial(
 extend({ ColorMaterial: colorMaterial });
 
 const FBOScene = ({ ...props }) => {
-  const graphicTexture = useTexture("/img1.jpg"); // Abstract graphic
+  // const graphicTexture = useTexture("/rgbnorm1.png"); // Norm swirl
+  const graphicTexture = useTexture("/holo.jpg");
+  // const graphicTexture = useTexture("/img1.jpg"); // Abstract graphic
   // const graphicTexture = useTexture("/water-normal.jpg"); // Water
   // const graphicTexture = useTexture("/11092-normal.jpg"); // Scaly
   // const graphicTexture = useTexture("/11013-normal.jpg"); // Abstract
