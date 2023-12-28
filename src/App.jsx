@@ -7,6 +7,8 @@ import * as THREE from "three";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { shaderMaterial, useFBO, useTexture } from "@react-three/drei";
+import { Bloom, DepthOfField, DotScreen, EffectComposer, Grid, Noise, Vignette } from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 import { Leva, useControls } from "leva";
 
 import smokeShader from "./shaders/smoke.glsl";
@@ -40,10 +42,10 @@ extend({ ColorMaterial: colorMaterial });
 
 const FBOScene = ({ ...props }) => {
   // const graphicTexture = useTexture("/rgbnorm1.png"); // Norm swirl
-  const graphicTexture = useTexture("/holo.jpg");
+  // const graphicTexture = useTexture("/holo.jpg");
   // const graphicTexture = useTexture("/img1.jpg"); // Abstract graphic
   // const graphicTexture = useTexture("/water-normal.jpg"); // Water
-  // const graphicTexture = useTexture("/11092-normal.jpg"); // Scaly
+  const graphicTexture = useTexture("/11092-normal.jpg"); // Scaly
   // const graphicTexture = useTexture("/11013-normal.jpg"); // Abstract
   // const graphicTexture = useTexture("/5952-normal.jpg"); // Cracked smoke
   // const graphicTexture = useTexture("/1073-normal.jpg"); // Fine smoke
@@ -204,6 +206,17 @@ const App = () => {
     <>
       <Canvas flat linear camera={{ fov: 75, position: [0, 0, 2.5] }}>
         <FBOScene />
+        <EffectComposer>
+          {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
+          <Bloom luminanceThreshold={0.3} luminanceSmoothing={0.9} height={300} />
+          <Noise opacity={0.1} blendFunction={BlendFunction.SCREEN} />
+          <DotScreen
+            blendFunction={BlendFunction.SCREEN} // blend mode
+            angle={Math.PI * 2.0} // angle of the dot pattern
+            scale={100.0} // scale of the dot pattern
+          />
+          <Vignette eskil={false} offset={0.1} darkness={0.75} />
+        </EffectComposer>
       </Canvas>
       <div
         style={{
@@ -222,7 +235,7 @@ const App = () => {
           userSelect: "none",
         }}
       >
-        Draw with your mouse
+        {/* Draw with your mouse */}
       </div>
     </>
   );
