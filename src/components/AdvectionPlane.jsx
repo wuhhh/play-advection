@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { extend, useFrame, useThree } from "@react-three/fiber";
 import { useFBO, useTexture } from "@react-three/drei";
 import { useControls } from "leva";
@@ -7,7 +7,7 @@ import advectionMaterial from "../lib/AdvectionMaterial";
 
 extend({ AdvectionMaterial: advectionMaterial });
 
-const AdvectionPlane = ({ ...props }) => {
+const AdvectionPlane = () => {
   const graphicTexture = useTexture("/images/holo-fx.webp");
   const bufferMaterial = useRef();
 
@@ -157,9 +157,22 @@ const AdvectionPlane = ({ ...props }) => {
   };
 
   useEffect(() => {
+    const handleTouchMove = event => {
+      event.preventDefault();
+      const touch = event.touches[0];
+      updateMousePosition(touch.clientX, touch.clientY);
+    };
+
     window.addEventListener("mousemove", event => {
       updateMousePosition(event.clientX, event.clientY);
     });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchstart", handleTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchstart", handleTouchMove);
+    };
   }, []);
 
   return (

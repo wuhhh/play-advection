@@ -97,10 +97,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  aspect-ratio: 2/1;
   border: 1px solid #ffc69c;
   background-color: #483d8b00;
   backdrop-filter: blur(8rem);
   padding: 2rem;
+  white-space: nowrap;
 }
