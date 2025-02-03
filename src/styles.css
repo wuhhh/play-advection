@@ -99,7 +99,7 @@ body {
   transform: translate(-50%, -50%);
   border: 1px solid #ffc69c;
   background-color: #483d8b00;
-  backdrop-filter: blur(8rem);
+  backdrop-filter: blur(1rem);
   padding: 2rem;
   white-space: nowrap;
 }
