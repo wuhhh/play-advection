@@ -2,7 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import { EffectComposer, Grid, Noise, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { Leva } from "leva";
+
 import AdvectionPlane from "./components/AdvectionPlane";
+import OverlayContent from "./components/OverlayContent";
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
           <Vignette eskil={false} offset={0.1} darkness={0.75} />
         </EffectComposer>
       </Canvas>
+      <OverlayContent />
     </>
   );
 };
