@@ -1,3 +1,8 @@
+/**
+ * Thank you to https://code.tutsplus.com/how-to-write-a-smoke-shader--cms-25587t
+ * for the head start it provided :)
+ */
+
 precision mediump float;
 
 uniform float uAdvDist; // distance to advect

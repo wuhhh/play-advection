@@ -1,8 +1,3 @@
-/**
- * Based on https://code.tutsplus.com/how-to-write-a-smoke-shader--cms-25587t
- * Ported to React Three Fiber by Huw Roberts (huwroberts.net)
- */
-
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, Grid, Noise, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
