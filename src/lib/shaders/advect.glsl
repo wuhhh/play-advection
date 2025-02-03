@@ -1,31 +1,32 @@
 precision mediump float;
 
-uniform float uAdvDist; // The distance to advect
-uniform vec3 uBaseColor; // The base background color
-uniform float uColorMode; // Subtractive or additive color mode
-uniform float uFactor; // The factor to multiply the color by
-uniform float uMouseVelocity; // The velocity of the mouse
-uniform vec3 uRGBIntensity; // The intensity of the target color circles
-uniform vec3 uRGBRadius; // The radius of the target color circles
-uniform vec3 uRGBThroughput; // The throughput of the target color circles
-uniform float uAdvectedMix; // The mix of the advected color
-uniform vec2 uRes; // The width and height of our screen
-uniform vec3 uSmokeSource; // The x,y are the posiiton. The z is the power/density
-uniform sampler2D uTexture; // Our input texture
-uniform sampler2D uVelocityTexture; // Advection / velocity field texture
-uniform float uTime; // The time in seconds
+uniform float uAdvDist; // distance to advect
+uniform vec3 uBaseColor; // base background color
+uniform float uColorMode; // color mode
+uniform float uFactor; // factor to multiply color by
+uniform float uMouseVelocity; // velocity of mouse
+uniform vec3 uRGBIntensity; // intensity of target color circles
+uniform vec3 uRGBRadius; // radius of target color circles
+uniform vec3 uRGBThroughput; // throughput of target color circles
+uniform float uAdvectedMix; // mix of advected color
+uniform vec2 uRes; // width and height of screen
+uniform vec3 uSmokeSource; // mouse coords, z is power/density
+uniform sampler2D uTexture; // input texture
+uniform sampler2D uVelocityTexture; // advection / velocity field texture
+uniform float uTime; // time in seconds
 
 varying vec2 vUv;
 
 void main() {
-	vec2 mouse = uSmokeSource.xy / uRes.xy;
 	vec2 fragCoord = gl_FragCoord.xy * 0.5;
 	vec2 pixel = fragCoord.xy / uRes.xy;
 
 	// Set the color of the current pixel to the color of the input texture
 	gl_FragColor = texture2D(uTexture, pixel);
 
-	float dist = distance(uSmokeSource.xy, fragCoord.xy);
+	// float brush = brushance(uSmokeSource.xy, fragCoord.xy); // round
+	float brush = abs(fragCoord.x - uSmokeSource.x) + abs(fragCoord.y - uSmokeSource.y); // diamond
+
 	float rIntensity = uRGBIntensity.r * 0.01;
 	float gIntensity = uRGBIntensity.g * 0.01;
 	float bIntensity = uRGBIntensity.b * 0.01;
@@ -40,9 +41,9 @@ void main() {
 	float bRadius = uRGBRadius.b * radiusVelScale * vel;
 	
 	// Increase the red and blue values of the current pixel by the smoke source power
-	gl_FragColor.r += (rIntensity * rThroughput * max(rRadius - dist, 0.0)) * uColorMode; 
-	gl_FragColor.g += (gIntensity * gThroughput * max(gRadius - dist, 0.0)) * uColorMode; 
-	gl_FragColor.b += (bIntensity * bThroughput * max(bRadius - dist, 0.0)) * uColorMode;
+	gl_FragColor.r += (rIntensity * rThroughput * max(rRadius - brush, 0.0)) * uColorMode; 
+	gl_FragColor.g += (gIntensity * gThroughput * max(gRadius - brush, 0.0)) * uColorMode; 
+	gl_FragColor.b += (bIntensity * bThroughput * max(bRadius - brush, 0.0)) * uColorMode;
 
 	// vec3 velTex = texture2D(uVelocityTexture, vUv).rgb;
 	// vec3 curr = gl_FragColor.rgb;

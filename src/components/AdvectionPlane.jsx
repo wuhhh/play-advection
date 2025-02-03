@@ -8,7 +8,7 @@ import advectionMaterial from "../lib/AdvectionMaterial";
 extend({ AdvectionMaterial: advectionMaterial });
 
 const AdvectionPlane = ({ ...props }) => {
-  const graphicTexture = useTexture("/holo.webp");
+  const graphicTexture = useTexture("/holo-fx.webp");
   const bufferMaterial = useRef();
 
   const config = useControls("Smoke", {
@@ -26,7 +26,7 @@ const AdvectionPlane = ({ ...props }) => {
       options: ["Additive", "Subtractive"],
     },
     factor: {
-      value: 10,
+      value: 9,
       min: 1,
       max: 200,
       step: 1,
@@ -62,7 +62,7 @@ const AdvectionPlane = ({ ...props }) => {
       step: 1.0,
     },
     advectedMix: {
-      value: 0.75,
+      value: 0.49,
       min: 0.0,
       max: 1.0,
       step: 0.01,
