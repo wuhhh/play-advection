@@ -4,9 +4,11 @@ uniform float uAdvDist; // The distance to advect
 uniform vec3 uBaseColor; // The base background color
 uniform float uColorMode; // Subtractive or additive color mode
 uniform float uFactor; // The factor to multiply the color by
+uniform float uMouseVelocity; // The velocity of the mouse
 uniform vec3 uRGBIntensity; // The intensity of the target color circles
 uniform vec3 uRGBRadius; // The radius of the target color circles
 uniform vec3 uRGBThroughput; // The throughput of the target color circles
+uniform float uAdvectedMix; // The mix of the advected color
 uniform vec2 uRes; // The width and height of our screen
 uniform vec3 uSmokeSource; // The x,y are the posiiton. The z is the power/density
 uniform sampler2D uTexture; // Our input texture
@@ -27,14 +29,20 @@ void main() {
 	float rIntensity = uRGBIntensity.r * 0.01;
 	float gIntensity = uRGBIntensity.g * 0.01;
 	float bIntensity = uRGBIntensity.b * 0.01;
-	float rThroughput = uRGBThroughput.r * 0.01;
-	float gThroughput = uRGBThroughput.g * 0.01;
-	float bThroughput = uRGBThroughput.b * 0.01;
+	float vel = min(uMouseVelocity, 2.0);
+	vel = vel > 0. ? max(vel, 0.75) : 0.0;
+	float rThroughput = uRGBThroughput.r * 0.01 * vel;
+	float gThroughput = uRGBThroughput.g * 0.01 * vel;
+	float bThroughput = uRGBThroughput.b * 0.01 * vel;
+	float radiusVelScale = .5;
+	float rRadius = uRGBRadius.r * radiusVelScale * vel;
+	float gRadius = uRGBRadius.g * radiusVelScale * vel;
+	float bRadius = uRGBRadius.b * radiusVelScale * vel;
 	
 	// Increase the red and blue values of the current pixel by the smoke source power
-	gl_FragColor.r += (rIntensity * rThroughput * max(uRGBRadius.r - dist, 0.0)) * uColorMode; // If the dist < 50, add 0.01 to r, radius 50
-	gl_FragColor.g += (gIntensity * gThroughput * max(uRGBRadius.g - dist, 0.0)) * uColorMode; // If the dist < 75, add 0.03 to b, radius 75
-	gl_FragColor.b += (bIntensity * bThroughput * max(uRGBRadius.b - dist, 0.0)) * uColorMode; // If the dist < 75, add 0.03 to b, radius 75
+	gl_FragColor.r += (rIntensity * rThroughput * max(rRadius - dist, 0.0)) * uColorMode; 
+	gl_FragColor.g += (gIntensity * gThroughput * max(gRadius - dist, 0.0)) * uColorMode; 
+	gl_FragColor.b += (bIntensity * bThroughput * max(bRadius - dist, 0.0)) * uColorMode;
 
 	// vec3 velTex = texture2D(uVelocityTexture, vUv).rgb;
 	// vec3 curr = gl_FragColor.rgb;
@@ -78,10 +86,11 @@ void main() {
 
 	// Multiply the colors by the weights
 	// The more aligned the direction is with the pixel, the higher the weight
-	rightColor *= rightWeight;
-	leftColor *= leftWeight;
-	upColor *= upWeight;
-	downColor *= downWeight;
+	float weightMult = 32.;
+	rightColor *= rightWeight * weightMult;
+	leftColor *= leftWeight * weightMult;
+	upColor *= upWeight * weightMult;
+	downColor *= downWeight * weightMult;
 
 	vec3 factor = (uFactor * 0.001) * (
 		leftColor.rgb + 
@@ -106,7 +115,7 @@ void main() {
 	
 	vec2 advectedPos = pixel - directionVec * uAdvDist * 0.001; // controls the distance of advection
 	vec4 advectedColor = texture2D(uTexture, advectedPos);
-	vec3 advectedMix = mix(gl_FragColor.rgb, advectedColor.rgb, 0.5);
+	vec3 advectedMix = mix(gl_FragColor.rgb, advectedColor.rgb, uAdvectedMix);
 
 	gl_FragColor.rgb = advectedMix;
 }
