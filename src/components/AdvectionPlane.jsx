@@ -8,7 +8,7 @@ import advectionMaterial from "../lib/AdvectionMaterial";
 extend({ AdvectionMaterial: advectionMaterial });
 
 const AdvectionPlane = () => {
-  const graphicTexture = useTexture("/images/holo-fx.webp");
+  const graphicTexture = useTexture("/advection/images/holo-fx.webp");
   const bufferMaterial = useRef();
 
   const config = useControls("Smoke", {

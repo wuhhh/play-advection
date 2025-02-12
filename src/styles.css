@@ -21,13 +21,13 @@ body,
 
 @font-face {
   font-family: "ballinger-mono";
-  src: url("fonts/bm/bm-regular.woff2") format("woff2"), url("fonts/bm/bm-regular.woff") format("woff");
+  src: url("/advection/fonts/bm/bm-regular.woff2") format("woff2"), url("/advection/fonts/bm/bm-regular.woff") format("woff");
   font-weight: normal;
 }
 
 @font-face {
   font-family: "ballinger-mono";
-  src: url("fonts/bm/bm-bold.woff2") format("woff2"), url("fonts/bm/bm-bold.woff") format("woff");
+  src: url("/advection/fonts/bm/bm-bold.woff2") format("woff2"), url("/advection/fonts/bm/bm-bold.woff") format("woff");
   font-weight: bold;
 }
 
