@@ -4,6 +4,7 @@ import { BlendFunction } from "postprocessing";
 import { Leva } from "leva";
 
 import AdvectionPlane from "./components/AdvectionPlane";
+import LogoMark from "./components/LogoMark.jsx";
 import OverlayContent from "./components/OverlayContent";
 
 const App = () => {

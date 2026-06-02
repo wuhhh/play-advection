@@ -1,3 +1,5 @@
+import LogoMark from "./LogoMark";
+
 export default function OverlayText() {
   return (
     <div className='overlayContent'>
@@ -10,6 +12,7 @@ export default function OverlayText() {
         <br /> in an almost indefinite
         <br /> number of domains
       </div>
+      <LogoMark />
     </div>
   );
 }
